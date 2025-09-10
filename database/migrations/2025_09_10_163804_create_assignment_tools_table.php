@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('assignment_tools', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->rememberToken();
+            $table->foreignId('assignment_id')->constrained('assignments')->cascadeOnDelete();
+            $table->foreignId('tool_id')->constrained('tools')->cascadeOnDelete();
             $table->timestamps();
+
+            $table->unique(['assignment_id', 'tool_id']);
         });
     }
 
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('assignment_tools');
     }
 };
