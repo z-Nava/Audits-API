@@ -9,7 +9,7 @@ class Tool extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['code','serial', 'model', 'description', 'line_id', 'active'];
+    protected $fillable = ['code','name', 'model', 'description', 'line_id', 'active'];
 
     protected $casts = ['active' => 'boolean'];
 

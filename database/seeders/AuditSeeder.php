@@ -54,7 +54,7 @@ class AuditSeeder extends Seeder
         // 4. Herramientas
         $tool1 = Tool::create([
             'code' => 'TOOL-001',
-            'serial' => 'S12345',
+            'name' => 'S12345',
             'model' => 'Modelo A',
             'description' => 'Herramienta para ajuste',
             'line_id' => $line->id,
@@ -62,7 +62,7 @@ class AuditSeeder extends Seeder
 
         $tool2 = Tool::create([
             'code' => 'TOOL-002',
-            'serial' => 'S12346',
+            'name' => 'S12346',
             'model' => 'Modelo B',
             'description' => 'Herramienta de torque',
             'line_id' => $line->id,
