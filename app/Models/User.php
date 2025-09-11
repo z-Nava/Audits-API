@@ -21,6 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'employee_number',
+        'role',
+        'active'
     ];
 
     /**
@@ -39,6 +42,37 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'active' => 'boolean',
     ];
+
+    public function assignmentsAsSupervisor()
+    {
+        return $this->hasMany(Assignment::class, 'supervisor_id');
+    }
+
+    public function assignmentsAsTechnician()
+    {
+        return $this->hasMany(Assignment::class, 'technician_id');
+    }
+
+    public function auditAsTechnician()
+    {
+        return $this->hasMany(Audit::class, 'technician_id');
+    }
+
+    public function auditAsSupervisor()
+    {
+        return $this->hasMany(Audit::class, 'supervisor_id');
+    }
+
+    public function registeredEmployeers()
+    {
+        return $this->hasMany(Employee::class, 'registered_by');
+    }
+
+    /** Scopes **/
+
+    public function scopeSupervisors($q) { return $q->where('role', 'supervisor'); }
+    public function scopeTechnicians($q) { return $q->where('role', 'technician'); }
+    public function scopeActive($q) { return $q->where('active', true); }
 }
