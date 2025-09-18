@@ -21,8 +21,12 @@ class UpdateProductionLineRequest extends FormRequest
      */
     public function rules(): array
     {
+        $id = $this->route('line')->id ?? $this->route('line');
         return [
-            //
+            'code' => 'required|string|max:50|unique:production_lines,code,' . $id,
+            'name' => 'required|string|max:120',
+            'area' => 'nullable|string|max:120',
+            'active' => 'sometimes|boolean',    
         ];
     }
 }

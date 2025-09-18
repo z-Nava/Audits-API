@@ -11,7 +11,7 @@ class StoreProductionLineRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class StoreProductionLineRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'code' => 'required|string|max:50|unique:production_lines,code',
+            'name' => 'required|string|max:120',
+            'area' => 'nullable|string|max:120',
+            'active' => 'sometimes|boolean',
         ];
     }
 }

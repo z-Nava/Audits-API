@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductionLineController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,4 +21,12 @@ Route::get('/user', function (Request $request) {
         'status' => 'success',
         'data' => $user
     ];
+});
+
+Route::prefix('v1')->group(function () {
+    Route::get('/lines', [ProductionLineController::class, 'index']);
+    Route::post('/lines', [ProductionLineController::class, 'store']);
+    Route::get('/lines/{line}', [ProductionLineController::class, 'show']);
+    Route::put('/lines/{line}', [ProductionLineController::class, 'update']);
+    Route::delete('/lines/{line}', [ProductionLineController::class, 'destroy']);
 });
