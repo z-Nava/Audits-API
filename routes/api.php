@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductionLineController;
+use App\Http\Controllers\ToolController;
+use App\Http\Controllers\EmployeeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,9 +34,18 @@ Route::prefix('v1')->group(function () {
     Route::delete('/lines/{line}', [ProductionLineController::class, 'destroy']);
 
     //TOOLS
-    Route::get('/tools', [\App\Http\Controllers\ToolController::class, 'index']);
-    Route::post('/tools', [\App\Http\Controllers\ToolController::class, 'store']);
-    Route::get('/tools/{tool}', [\App\Http\Controllers\ToolController::class, 'show']);
-    Route::put('/tools/{tool}', [\App\Http\Controllers\ToolController::class, 'update']);
-    Route::delete('/tools/{tool}', [\App\Http\Controllers\ToolController::class, 'destroy']);
+    Route::get('/tools', [ToolController::class, 'index']);
+    Route::post('/tools', [ToolController::class, 'store']);
+    Route::get('/tools/{tool}', [ToolController::class, 'show']);
+    Route::put('/tools/{tool}', [ToolController::class, 'update']);
+    Route::delete('/tools/{tool}', [ToolController::class, 'destroy']);
+
+    //EMPLOYEES
+    Route::get('/employees', [EmployeeController::class, 'index']);
+    Route::post('/employees', [EmployeeController::class, 'store']);
+    Route::get('/employees/{employee}', [EmployeeController::class, 'show']);
+    Route::put('/employees/{employee}', [EmployeeController::class, 'update']);
+    Route::delete('/employees/{employee}', [EmployeeController::class, 'destroy']);
+
+    Route::get('/employees/validate', [EmployeeController::class, 'validateNumber']);
 });

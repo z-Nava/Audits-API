@@ -6,6 +6,7 @@ use App\Models\ProductionLine;
 use App\Models\Tool;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
+use App\Models\Employee;
 
 class CatalogService
 {
@@ -109,5 +110,62 @@ class CatalogService
     public function deleteTool(Tool $tool): void
     {
         $tool->delete();
+    }
+
+    public function listEmployees(array $filters = []): LengthAwarePaginator|Collection
+    {
+        $q = Employee::query()->with(['registeredBy:id,name,email']);
+
+        if (!empty($filters['q'])) {
+            $term = trim($filters['q']);
+            $q->where(function ($qq) use ($term) {
+                $qq->where('employee_number', 'like', "%{$term}%")
+                   ->orWhere('name', 'like', "%{$term}%");
+            });
+        }
+
+        if (isset($filters['active'])) {
+            $active = filter_var($filters['active'], FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+            if (!is_null($active)) {
+                $q->where('active', $active);
+            }
+        }
+
+        if (!empty($filters['registered_by'])) {
+            $q->where('registered_by', (int)$filters['registered_by']);
+        }
+
+        $q->latest('id');
+
+        $perPage = (int)($filters['per_page'] ?? 10);
+        return $perPage > 0 ? $q->paginate($perPage) : $q->get();
+    }
+
+    /** Crear empleado */
+    public function createEmployee(array $data): Employee
+    {
+        $data['active'] = $data['active'] ?? true;
+        return Employee::create($data)->load('registeredBy:id,name,email');
+    }
+
+    /** Actualizar empleado */
+    public function updateEmployee(Employee $employee, array $data): Employee
+    {
+        $employee->update($data);
+        return $employee->load('registeredBy:id,name,email');
+    }
+
+    /** Eliminar empleado */
+    public function deleteEmployee(Employee $employee): void
+    {
+        $employee->delete();
+    }
+
+    /** Validar existencia de número de empleado (para formularios del técnico) */
+    public function validateEmployeeNumber(string $number): bool
+    {
+        return Employee::where('employee_number', $number)
+                       ->where('active', true)
+                       ->exists();
     }
 }
