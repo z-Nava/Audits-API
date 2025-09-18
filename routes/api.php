@@ -24,9 +24,17 @@ Route::get('/user', function (Request $request) {
 });
 
 Route::prefix('v1')->group(function () {
+    //PRODUCTION LINES
     Route::get('/lines', [ProductionLineController::class, 'index']);
     Route::post('/lines', [ProductionLineController::class, 'store']);
     Route::get('/lines/{line}', [ProductionLineController::class, 'show']);
     Route::put('/lines/{line}', [ProductionLineController::class, 'update']);
     Route::delete('/lines/{line}', [ProductionLineController::class, 'destroy']);
+
+    //TOOLS
+    Route::get('/tools', [\App\Http\Controllers\ToolController::class, 'index']);
+    Route::post('/tools', [\App\Http\Controllers\ToolController::class, 'store']);
+    Route::get('/tools/{tool}', [\App\Http\Controllers\ToolController::class, 'show']);
+    Route::put('/tools/{tool}', [\App\Http\Controllers\ToolController::class, 'update']);
+    Route::delete('/tools/{tool}', [\App\Http\Controllers\ToolController::class, 'destroy']);
 });
