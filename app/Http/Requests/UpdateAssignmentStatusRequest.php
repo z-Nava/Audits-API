@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AttachToolsRequest extends FormRequest
+class UpdateAssigmentStatusRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,7 @@ class AttachToolsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tools' => 'required|array|min:1',
-            'tools.*' => 'integer|exists:tools,id',
+            'status' => 'required|in:assigned,in_progress,completed,cancelled',
         ];
     }
 }

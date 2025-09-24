@@ -11,7 +11,7 @@ class UpdateAssignmentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class UpdateAssignmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'line_id' => 'sometimes|required|integer|exists:production_lines,id',
+            'shift' => 'sometimes|required|in:A,B,C',
+            'due_at' => 'sometimes|nullable|date|after_or_equal:assigned_at',
+            'notes' => 'sometimes|nullable|string',
         ];
     }
 }

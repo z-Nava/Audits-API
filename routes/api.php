@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductionLineController;
 use App\Http\Controllers\ToolController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\AssignmentController;
+use App\Http\Controllers\AssignmentToolController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +28,7 @@ Route::get('/user', function (Request $request) {
 });
 
 Route::prefix('v1')->group(function () {
+    
     //PRODUCTION LINES
     Route::get('/lines', [ProductionLineController::class, 'index']);
     Route::post('/lines', [ProductionLineController::class, 'store']);
@@ -48,4 +51,18 @@ Route::prefix('v1')->group(function () {
     Route::delete('/employees/{employee}', [EmployeeController::class, 'destroy']);
 
     Route::get('/employees/validate', [EmployeeController::class, 'validateNumber']);
+
+    //ASSIGNMENTS
+    Route::get('assignments',              [AssignmentController::class, 'index']);
+    Route::post('assignments',             [AssignmentController::class, 'store']);
+    Route::get('assignments/{assignment}', [AssignmentController::class, 'show']);
+    Route::put('assignments/{assignment}', [AssignmentController::class, 'update']);
+    Route::patch('assignments/{assignment}/status', [AssignmentController::class, 'updateStatus']);
+    Route::delete('assignments/{assignment}', [AssignmentController::class, 'destroy']);
+
+    // ASSIGNMENTS TOOLS
+    Route::get('assignments/{assignment}/tools',            [AssignmentToolController::class, 'index']);
+    Route::post('assignments/{assignment}/tools',           [AssignmentToolController::class, 'attach']);
+    Route::delete('assignments/{assignment}/tools/{tool}',  [AssignmentToolController::class, 'detach']);
+
 });

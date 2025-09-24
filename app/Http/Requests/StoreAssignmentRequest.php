@@ -11,7 +11,7 @@ class StoreAssignmentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,13 @@ class StoreAssignmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'supervisor_id' => 'required|integer|exists:users,id',
+            'technician_id' => 'required|integer|exists:users,id|different:supervisor_id',
+            'line_id' => 'required|integer|exists:production_lines,id',
+            'shift' => 'required|in:A,B,C',
+            'assigned_at' => 'required|date',
+            'due_at' => 'nullable|date|after_or_equal:assigned_at',
+            'notes' => 'nullable|string',
         ];
     }
 }
