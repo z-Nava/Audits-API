@@ -11,7 +11,7 @@ class SubmitAuditRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,7 @@ class SubmitAuditRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'ended_at' => 'sometimes|nullable|date',
         ];
     }
 }

@@ -11,7 +11,7 @@ class UpdateAuditItemRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class UpdateAuditItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'result'   => 'sometimes|required|in:PASS,FAIL,NA',
+            'comments' => 'sometimes|nullable|string',
+            'defects'  => 'sometimes|nullable|array',
         ];
     }
 }

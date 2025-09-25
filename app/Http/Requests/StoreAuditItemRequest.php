@@ -11,7 +11,7 @@ class StoreAuditItemRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class StoreAuditItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'tool_id'   => 'required|integer|exists:tools,id',
+            'result'    => 'required|in:PASS,FAIL,NA',
+            'comments'  => 'sometimes|nullable|string',
+            'defects'   => 'sometimes|nullable|array',
         ];
     }
 }

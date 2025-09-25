@@ -11,7 +11,7 @@ class StoreAuditRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,12 @@ class StoreAuditRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'assignment_id'   => 'required|integer|exists:assignments,id',
+            'technician_id'   => 'required|integer|exists:users,id',
+            'employee_number' => 'required|string|max:50', // se valida contra employees en el Service
+            'shift'           => 'required|in:A,B,C',
+            'summary'         => 'sometimes|nullable|string',
+            'started_at'      => 'sometimes|nullable|date',
         ];
     }
 }

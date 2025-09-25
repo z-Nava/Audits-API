@@ -11,7 +11,7 @@ class StoreAuditPhotoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class StoreAuditPhotoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'photo'    => 'required|file|mimes:jpg,jpeg,png|max:5120', // 5MB
+            'caption'  => 'sometimes|nullable|string|max:160',
+            'taken_at' => 'sometimes|nullable|date',
         ];
     }
 }

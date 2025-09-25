@@ -11,7 +11,7 @@ class UpdateAuditRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class UpdateAuditRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'summary'    => 'sometimes|nullable|string',
+            'started_at' => 'sometimes|nullable|date',
+            'ended_at'   => 'sometimes|nullable|date|after_or_equal:started_at',
         ];
     }
 }
