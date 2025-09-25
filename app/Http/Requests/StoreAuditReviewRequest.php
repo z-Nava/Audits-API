@@ -11,7 +11,7 @@ class StoreAuditReviewRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class StoreAuditReviewRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'supervisor_id' => 'required|integer|exists:users,id',
+            'decision'      => 'required|in:approved,rejected,needs_changes',
+            'notes'         => 'sometimes|nullable|string',
+            'reviewed_at'   => 'sometimes|nullable|date',
         ];
     }
 }

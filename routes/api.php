@@ -10,6 +10,7 @@ use App\Http\Controllers\AssignmentToolController;
 use App\Http\Controllers\AuditController;
 use App\Http\Controllers\AuditItemController;
 use App\Http\Controllers\AuditPhotoController;
+use App\Http\Controllers\AuditReviewController;
 
 
 /*
@@ -86,4 +87,10 @@ Route::prefix('v1')->group(function () {
     Route::post('audit-items/{item}/photos',   [AuditPhotoController::class, 'store']);
     Route::delete('audit-photos/{photo}',      [AuditPhotoController::class, 'destroy']);
 
+    // REVIEWS
+    Route::get('audits/{audit}/reviews',  [AuditReviewController::class, 'index']);
+    Route::post('audits/{audit}/reviews', [AuditReviewController::class, 'store']);
+
+    // REOOPEN IF NEEDED CHANGES
+    Route::post('audits/{audit}/reopen',  [AuditReviewController::class, 'reopen']);
 });
