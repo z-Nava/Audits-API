@@ -11,6 +11,7 @@ use App\Http\Controllers\AuditController;
 use App\Http\Controllers\AuditItemController;
 use App\Http\Controllers\AuditPhotoController;
 use App\Http\Controllers\AuditReviewController;
+use App\Http\Controllers\AuthController;
 
 
 /*
@@ -33,6 +34,14 @@ Route::get('/user', function (Request $request) {
 });
 
 Route::prefix('v1')->group(function () {
+
+    Route::post('auth/register', [AuthController::class, 'register']);
+    Route::post('auth/login',    [AuthController::class, 'login']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('auth/logout', [AuthController::class, 'logout']);
+    Route::get('auth/me',     [AuthController::class, 'me']);
+   
     
     //PRODUCTION LINES
     Route::get('/lines', [ProductionLineController::class, 'index']);
@@ -93,4 +102,5 @@ Route::prefix('v1')->group(function () {
 
     // REOOPEN IF NEEDED CHANGES
     Route::post('audits/{audit}/reopen',  [AuditReviewController::class, 'reopen']);
+    });
 });
