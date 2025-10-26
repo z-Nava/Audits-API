@@ -20,7 +20,7 @@ class Assignment extends Model
 
     public function technician()
     {
-        return $this->belongsTo(Employee::class, 'technician_id');
+        return $this->belongsTo(User::class, 'technician_id');
     }
 
     public function line()
