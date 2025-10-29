@@ -12,6 +12,7 @@
                 <th class="px-4 py-2">Código</th>
                 <th class="px-4 py-2">Nombre</th>
                 <th class="px-4 py-2">Área</th>
+                <th class="px-4 py-2">Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -21,6 +22,13 @@
                     <td class="px-4 py-2">{{ $line->code }}</td>
                     <td class="px-4 py-2">{{ $line->name }}</td>
                     <td class="px-4 py-2">{{ $line->area }}</td>
+                    <td class="px-4 py-2 flex gap-2">
+                        <a href="{{ route('supervisor.lines.edit', $line->id) }}" class="text-blue-600">Editar</a>
+                        <form action="{{ route('supervisor.lines.destroy', $line->id) }}" method="POST" onsubmit="return confirm('¿Eliminar esta línea?')">
+                            @csrf @method('DELETE')
+                            <button class="text-red-600">Eliminar</button>
+                        </form>
+                    </td>
                 </tr>
             @endforeach
         </tbody>

@@ -34,7 +34,21 @@ Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
 
 Route::get('/lines', [LineWebController::class, 'index'])->name('lines.index');
+Route::get('/lines/create', [LineWebController::class, 'create'])->name('lines.create');
+Route::post('/lines', [LineWebController::class, 'store'])->name('lines.store');
+Route::get('/lines/{line}/edit', [LineWebController::class, 'edit'])->name('lines.edit');
+Route::put('/lines/{line}', [LineWebController::class, 'update'])->name('lines.update');
+Route::delete('/lines/{line}', [LineWebController::class, 'destroy'])->name('lines.destroy');
+
+
 Route::get('/tools', [ToolWebController::class, 'index'])->name('tools.index');
+Route::get('/tools/create', [ToolWebController::class, 'create'])->name('tools.create');
+Route::post('/tools', [ToolWebController::class, 'store'])->name('tools.store');
+Route::get('/tools/{tool}/edit', [ToolWebController::class, 'edit'])->name('tools.edit');
+Route::put('/tools/{tool}', [ToolWebController::class, 'update'])->name('tools.update');
+Route::delete('/tools/{tool}', [ToolWebController::class, 'destroy'])->name('tools.destroy');
+
+
 Route::get('/employees', [EmployeeWebController::class, 'index'])->name('employees.index');
 Route::get('/assignments', [AssignmentWebController::class, 'index'])->name('assignments.index');
 Route::get('/audits', [AuditWebController::class, 'index'])->name('audits.index');
