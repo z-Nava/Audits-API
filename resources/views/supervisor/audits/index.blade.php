@@ -13,6 +13,7 @@
                 <th class="px-4 py-2">Línea</th>
                 <th class="px-4 py-2">Resultado</th>
                 <th class="px-4 py-2">Estado</th>
+                <th class="px-4 py-2">Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -23,6 +24,11 @@
                     <td class="px-4 py-2">{{ $audit->line->name ?? '—' }}</td>
                     <td class="px-4 py-2">{{ $audit->overall_result ?? '—' }}</td>
                     <td class="px-4 py-2">{{ ucfirst($audit->status) }}</td>
+                    <td class="px-4 py-2">
+                        <a href="{{ route('supervisor.audits.show', $audit->id) }}" class="text-blue-600 hover:underline">
+                            Ver detalle
+                        </a>
+                </td>
                 </tr>
             @endforeach
         </tbody>
