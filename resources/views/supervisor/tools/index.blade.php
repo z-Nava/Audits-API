@@ -13,6 +13,7 @@
                 <th class="px-4 py-2">Nombre</th>
                 <th class="px-4 py-2">Modelo</th>
                 <th class="px-4 py-2">Línea</th>
+                <th class="px-4 py-2">Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -23,6 +24,13 @@
                     <td class="px-4 py-2">{{ $tool->name }}</td>
                     <td class="px-4 py-2">{{ $tool->model }}</td>
                     <td class="px-4 py-2">{{ $tool->line->name ?? '—' }}</td>
+                    <td class="px-4 py-2 flex gap-2">
+                        <a href="{{ route('supervisor.tools.edit', $tool->id) }}" class="text-blue-600">Editar</a>
+                        <form action="{{ route('supervisor.tools.destroy', $tool->id) }}" method="POST" onsubmit="return confirm('¿Eliminar esta herramienta?')">
+                            @csrf @method('DELETE')
+                            <button class="text-red-600">Eliminar</button>
+                        </form>
+                    </td>
                 </tr>
             @endforeach
         </tbody>
