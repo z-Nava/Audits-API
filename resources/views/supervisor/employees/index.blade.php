@@ -12,6 +12,7 @@
                 <th class="px-4 py-2">Número</th>
                 <th class="px-4 py-2">Nombre</th>
                 <th class="px-4 py-2">Activo</th>
+                <th class="px-4 py-2">Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -26,6 +27,13 @@
                         @else
                             <span class="text-red-600 font-semibold">No</span>
                         @endif
+                    </td>
+                    <td class="px-4 py-2 flex gap-2">
+                        <a href="{{ route('supervisor.employees.edit', $employee->id) }}" class="text-blue-600">Editar</a>
+                        <form action="{{ route('supervisor.employees.destroy', $employee->id) }}" method="POST" onsubmit="return confirm('¿Eliminar este empleado?')">
+                            @csrf @method('DELETE')
+                            <button class="text-red-600">Eliminar</button>
+                        </form>
                     </td>
                 </tr>
             @endforeach

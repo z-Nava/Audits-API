@@ -50,6 +50,13 @@ Route::delete('/tools/{tool}', [ToolWebController::class, 'destroy'])->name('too
 
 
 Route::get('/employees', [EmployeeWebController::class, 'index'])->name('employees.index');
+Route::get('/employees/create', [EmployeeWebController::class, 'create'])->name('employees.create');
+Route::post('/employees', [EmployeeWebController::class, 'store'])->name('employees.store');
+Route::get('/employees/{employee}/edit', [EmployeeWebController::class, 'edit'])->name('employees.edit');
+Route::put('/employees/{employee}', [EmployeeWebController::class, 'update'])->name('employees.update');
+Route::delete('/employees/{employee}', [EmployeeWebController::class, 'destroy'])->name('employees.destroy');
+
+
 Route::get('/assignments', [AssignmentWebController::class, 'index'])->name('assignments.index');
 Route::get('/audits', [AuditWebController::class, 'index'])->name('audits.index');
 });
