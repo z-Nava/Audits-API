@@ -58,5 +58,12 @@ Route::delete('/employees/{employee}', [EmployeeWebController::class, 'destroy']
 
 
 Route::get('/assignments', [AssignmentWebController::class, 'index'])->name('assignments.index');
+Route::get('/assignments/create', [AssignmentWebController::class, 'create'])->name('assignments.create');
+Route::post('/assignments', [AssignmentWebController::class, 'store'])->name('assignments.store');
+Route::get('/assignments/{assignment}/edit', [AssignmentWebController::class, 'edit'])->name('assignments.edit');
+Route::put('/assignments/{assignment}', [AssignmentWebController::class, 'update'])->name('assignments.update');
+Route::delete('/assignments/{assignment}', [AssignmentWebController::class, 'destroy'])->name('assignments.destroy');
+
+
 Route::get('/audits', [AuditWebController::class, 'index'])->name('audits.index');
 });

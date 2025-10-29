@@ -13,6 +13,7 @@
                 <th class="px-4 py-2">Línea</th>
                 <th class="px-4 py-2">Turno</th>
                 <th class="px-4 py-2">Estado</th>
+                <th class="px-4 py-2">Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -23,6 +24,13 @@
                     <td class="px-4 py-2">{{ $a->line->name ?? '—' }}</td>
                     <td class="px-4 py-2">{{ ucfirst($a->shift) }}</td>
                     <td class="px-4 py-2">{{ ucfirst($a->status) }}</td>
+                    <td class="px-4 py-2 flex gap-2">
+                        <a href="{{ route('supervisor.assignments.edit', $a->id) }}" class="text-blue-600">Editar</a>
+                        <form action="{{ route('supervisor.assignments.destroy', $a->id) }}" method="POST" onsubmit="return confirm('¿Eliminar esta asignación?')">
+                            @csrf @method('DELETE')
+                            <button class="text-red-600">Eliminar</button>
+                        </form>
+                    </td>
                 </tr>
             @endforeach
         </tbody>
