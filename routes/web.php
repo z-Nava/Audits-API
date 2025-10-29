@@ -7,7 +7,7 @@ use App\Http\Controllers\Web\Supervisor\ToolWebController;
 use App\Http\Controllers\Web\Supervisor\EmployeeWebController;
 use App\Http\Controllers\Web\Supervisor\AssignmentWebController;
 use App\Http\Controllers\Web\Supervisor\AuditWebController;
-
+use App\Http\Controllers\Web\Supervisor\LoginWebController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +23,11 @@ use App\Http\Controllers\Web\Supervisor\AuditWebController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::get('/login', [LoginWebController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginWebController::class, 'login']);
+Route::post('/logout', [LoginWebController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth', 'role:supervisor'])->prefix('supervisor')->name('supervisor.')->group(function () {
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
