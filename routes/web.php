@@ -66,4 +66,7 @@ Route::delete('/assignments/{assignment}', [AssignmentWebController::class, 'des
 
 
 Route::get('/audits', [AuditWebController::class, 'index'])->name('audits.index');
+Route::get('/audits/{audit}', [AuditWebController::class, 'show'])->name('audits.show');
+Route::post('/audits/{audit}/review', [AuditWebController::class, 'review'])->name('audits.review');
+
 });
