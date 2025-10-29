@@ -49,27 +49,8 @@
     @endforelse
 
     @if($audit->status === 'submitted')
-    <h2 class="text-xl font-semibold mb-2 mt-6">Revisar auditoría</h2>
-
-    <form method="POST" action="{{ route('supervisor.audits.review', $audit->id) }}" class="space-y-4 bg-white p-4 rounded shadow">
-        @csrf
-
-        <div>
-            <label class="block mb-1 font-medium">Decisión</label>
-            <select name="decision" required class="w-full border p-2 rounded">
-                <option value="">— Selecciona —</option>
-                <option value="approved">Aprobar</option>
-                <option value="needs_changes">Solicitar cambios</option>
-                <option value="rejected">Rechazar</option>
-            </select>
-        </div>
-
-        <div>
-            <label class="block mb-1 font-medium">Notas (opcional)</label>
-            <textarea name="notes" rows="3" class="w-full border p-2 rounded"></textarea>
-        </div>
-
-        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Enviar revisión</button>
-    </form>
-@endif
+        <a href="#" class="inline-block mt-4 bg-blue-600 text-white px-4 py-2 rounded">
+            Revisar auditoría
+        </a>
+    @endif
 @endsection
