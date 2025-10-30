@@ -24,6 +24,12 @@
                 <li><a href="{{ route('supervisor.technicians.index') }}" class="hover:text-red-500">Técnicos</a></li>
                 <li><a href="{{ route('supervisor.assignments.index') }}" class="hover:text-red-500">Asignaciones</a></li>
                 <li><a href="{{ route('supervisor.audits.index') }}" class="hover:text-red-500">Auditorías</a></li>
+                <li>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="hover:text-red-500">Cerrar Sesión</button>
+                    </form>
+                </li>
             </ul>
         </div>
     </nav>
