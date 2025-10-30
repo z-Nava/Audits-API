@@ -8,6 +8,7 @@ use App\Http\Controllers\Web\Supervisor\EmployeeWebController;
 use App\Http\Controllers\Web\Supervisor\AssignmentWebController;
 use App\Http\Controllers\Web\Supervisor\AuditWebController;
 use App\Http\Controllers\Web\Supervisor\LoginWebController;
+use App\Http\Controllers\Web\Supervisor\TechnicianWebController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,12 +50,12 @@ Route::put('/tools/{tool}', [ToolWebController::class, 'update'])->name('tools.u
 Route::delete('/tools/{tool}', [ToolWebController::class, 'destroy'])->name('tools.destroy');
 
 
-Route::get('/employees', [EmployeeWebController::class, 'index'])->name('employees.index');
-Route::get('/employees/create', [EmployeeWebController::class, 'create'])->name('employees.create');
-Route::post('/employees', [EmployeeWebController::class, 'store'])->name('employees.store');
-Route::get('/employees/{employee}/edit', [EmployeeWebController::class, 'edit'])->name('employees.edit');
-Route::put('/employees/{employee}', [EmployeeWebController::class, 'update'])->name('employees.update');
-Route::delete('/employees/{employee}', [EmployeeWebController::class, 'destroy'])->name('employees.destroy');
+Route::get('/technicians', [TechnicianWebController::class, 'index'])->name('technicians.index');
+Route::get('/technicians/create', [TechnicianWebController::class, 'create'])->name('technicians.create');
+Route::post('/technicians', [TechnicianWebController::class, 'store'])->name('technicians.store');
+Route::get('/technicians/{technician}/edit', [TechnicianWebController::class, 'edit'])->name('technicians.edit');
+Route::put('/technicians/{technician}', [TechnicianWebController::class, 'update'])->name('technicians.update');
+Route::delete('/technicians/{technician}', [TechnicianWebController::class, 'destroy'])->name('technicians.destroy');
 
 
 Route::get('/assignments', [AssignmentWebController::class, 'index'])->name('assignments.index');

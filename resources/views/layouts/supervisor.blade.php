@@ -11,7 +11,7 @@
             <li><a href="{{ route('supervisor.dashboard') }}">Dashboard</a></li>
             <li><a href="{{ route('supervisor.lines.index') }}">Líneas</a></li>
             <li><a href="{{ route('supervisor.tools.index') }}">Herramientas</a></li>
-            <li><a href="{{ route('supervisor.employees.index') }}">Empleados</a></li>
+            <li><a href="{{ route('supervisor.technicians.index') }}">Tecnicos de calidad</a></li>
             <li><a href="{{ route('supervisor.assignments.index') }}">Asignaciones</a></li>
             <li><a href="{{ route('supervisor.audits.index') }}">Auditorías</a></li>
         </ul>
