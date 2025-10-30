@@ -4,7 +4,10 @@
 
 @section('content')
     <h1 class="text-xl font-bold mb-4">Líneas de Producción</h1>
-
+ <div class="flex justify-between items-center mb-4">
+        <h1 class="text-2xl font-bold">Líneas</h1>
+        <a href="{{ route('supervisor.lines.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded">+ Crear línea</a>
+    </div>
     <table class="w-full bg-white shadow rounded">
         <thead>
             <tr class="bg-gray-200 text-left">

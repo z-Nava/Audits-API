@@ -4,7 +4,9 @@
 
 @section('content')
     <h1 class="text-xl font-bold mb-4">Empleados</h1>
-
+    <a href="{{ route('supervisor.employees.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded mb-4 inline-block">
+        + Crear empleado
+    </a>
     <table class="w-full bg-white shadow rounded">
         <thead>
             <tr class="bg-gray-200 text-left">

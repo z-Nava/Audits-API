@@ -4,7 +4,9 @@
 
 @section('content')
     <h1 class="text-xl font-bold mb-4">Asignaciones</h1>
-
+    <a href="{{ route('supervisor.assignments.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded mb-4 inline-block">
+        + Crear asignación
+    </a>
     <table class="w-full bg-white shadow rounded">
         <thead>
             <tr class="bg-gray-200 text-left">
