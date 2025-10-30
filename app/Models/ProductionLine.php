@@ -27,4 +27,9 @@ class ProductionLine extends Model
     {
         return $this->hasMany(Audit::class, 'line_id');
     }
+
+    public function scopeActive($query)
+    {
+        return $query->where('active', true);
+    }
 }
