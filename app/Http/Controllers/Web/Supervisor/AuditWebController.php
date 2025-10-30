@@ -6,14 +6,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\AuditService;
 use App\Models\Audit;
+use App\Services\ReviewService;
 
 class AuditWebController extends Controller
 {
     protected AuditService $audit;
+    protected $review;
 
-    public function __construct(AuditService $audit)
+    public function __construct(AuditService $audit, ReviewService $review)
     {
         $this->audit = $audit;
+        $this->review = $review;
     }
 
     public function index(Request $request)
@@ -51,4 +54,19 @@ class AuditWebController extends Controller
         return redirect()->route('supervisor.audits.show', $audit->id)
                         ->with('success', 'Revisión registrada correctamente.');
     }
+
+    public function reopen(Audit $audit)
+    {
+        try {
+            $this->$audit->reopen($audit);
+            return redirect()
+                ->route('supervisor.audits.show', $audit->id)
+                ->with('success', 'La auditoría ha sido reabierta correctamente.');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()
+                ->route('supervisor.audits.show', $audit->id)
+                ->withErrors($e->errors());
+        }
+    }
+
 }

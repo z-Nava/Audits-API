@@ -47,11 +47,65 @@
     @empty
         <p>No hay revisiones aún.</p>
     @endforelse
-<pre>Estado actual: [{{ $audit->status }}]</pre>
 
+    {{-- Estado actual para debug --}}
+    <pre>Estado actual: [{{ $audit->status }}]</pre>
+
+    {{-- Formulario de revisión --}}
     @if($audit->status === 'submitted')
-        <a href="#" class="inline-block mt-4 bg-blue-600 text-white px-4 py-2 rounded">
-            Revisar auditoría
-        </a>
+        <h2 class="text-xl font-semibold mb-2 mt-6">Revisar auditoría</h2>
+
+        @if(session('success'))
+            <div class="bg-green-100 text-green-800 p-3 rounded mb-4">
+                {{ session('success') }}
+            </div>
+        @endif
+        @if($errors->any())
+            <div class="bg-red-100 text-red-800 p-3 rounded mb-4">
+                <ul class="list-disc pl-5">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <form method="POST" action="{{ route('supervisor.audits.review', $audit->id) }}" class="space-y-4 bg-white p-4 rounded shadow">
+            @csrf
+            <div>
+                <label class="block mb-1 font-medium">Decisión</label>
+                <select name="decision" required class="w-full border p-2 rounded">
+                    <option value="">— Selecciona —</option>
+                    <option value="approved">Aprobar</option>
+                    <option value="needs_changes">Solicitar cambios</option>
+                    <option value="rejected">Rechazar</option>
+                </select>
+            </div>
+            <div>
+                <label class="block mb-1 font-medium">Notas (opcional)</label>
+                <textarea name="notes" rows="3" class="w-full border p-2 rounded"></textarea>
+            </div>
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Enviar revisión</button>
+        </form>
+    @endif
+
+    {{-- Botón para reabrir --}}
+    @if($audit->status === 'reviewed')
+        <h2 class="text-xl font-semibold mb-2 mt-6">Reabrir auditoría</h2>
+        <form method="POST" action="{{ route('supervisor.audits.reopen', $audit->id) }}"
+              onsubmit="return confirm('¿Estás seguro que deseas reabrir esta auditoría?')"
+              class="bg-white p-4 rounded shadow mt-4">
+            @csrf
+            <button type="submit" class="bg-yellow-500 text-white px-4 py-2 rounded">
+                Reabrir auditoría
+            </button>
+        </form>
+    @endif
+
+    {{-- Mensaje si ya está cerrada --}}
+    @if($audit->status === 'closed')
+        <div class="bg-gray-100 p-3 rounded mt-4">
+            <p class="text-gray-700">Esta auditoría ha sido cerrada y no se pueden realizar más acciones.</p>
+        </div>
     @endif
 @endsection
