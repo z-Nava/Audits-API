@@ -29,9 +29,9 @@
         <div>
             <label class="block">Turno</label>
             <select name="shift" class="w-full border p-2 rounded" required>
-                <option value="morning">Mañana</option>
-                <option value="evening">Tarde</option>
-                <option value="night">Noche</option>
+                <option value="A">Mañana</option>
+                <option value="B">Tarde</option>
+                <option value="C">Noche</option>
             </select>
         </div>
 
