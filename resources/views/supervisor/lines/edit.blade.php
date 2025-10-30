@@ -25,7 +25,10 @@
         </div>
 
         <div>
-            <label><input type="checkbox" name="active" {{ $line->active ? 'checked' : '' }}> Activa</label>
+            <label>
+                <input type="hidden" name="active" value="0">
+                <input type="checkbox" name="active" value="1" {{ $line->active ? 'checked' : '' }}> Activa
+            </label>
         </div>
 
         <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Actualizar</button>
