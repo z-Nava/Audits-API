@@ -65,11 +65,6 @@ class User extends Authenticatable
         return $this->hasMany(Audit::class, 'supervisor_id');
     }
 
-    public function registeredEmployeers()
-    {
-        return $this->hasMany(Employee::class, 'registered_by');
-    }
-
     /** Scopes **/
 
     public function scopeSupervisors($q) { return $q->where('role', 'supervisor'); }
