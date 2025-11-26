@@ -68,13 +68,6 @@ class AuditSeeder extends Seeder
             'line_id' => $line->id,
         ]);
 
-        // 5. Empleado (número de empleado válido)
-        $employee = Employee::create([
-            'employee_number' => 'EMP3001',
-            'name' => 'Empleado de Planta',
-            'registered_by' => $supervisor->id,
-        ]);
-
         // 6. Asignación (supervisor → técnico)
         $assignment = Assignment::create([
             'supervisor_id' => $supervisor->id,
@@ -94,7 +87,6 @@ class AuditSeeder extends Seeder
             'assignment_id' => $assignment->id,
             'technician_id' => $technician->id,
             'supervisor_id' => $supervisor->id,
-            'employee_number' => $employee->employee_number,
             'audit_code' => 'AUD-' . now()->format('Ymd') . '-' . Str::random(5),
             'line_id' => $line->id,
             'shift' => 'A',
