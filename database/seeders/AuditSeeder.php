@@ -87,6 +87,7 @@ class AuditSeeder extends Seeder
             'assignment_id' => $assignment->id,
             'technician_id' => $technician->id,
             'supervisor_id' => $supervisor->id,
+            'employee_number' => 'TEST',
             'audit_code' => 'AUD-' . now()->format('Ymd') . '-' . Str::random(5),
             'line_id' => $line->id,
             'shift' => 'A',
