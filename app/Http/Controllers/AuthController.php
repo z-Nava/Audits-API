@@ -44,9 +44,16 @@ class AuthController extends Controller
     {
         $data = $request->validated();
 
-        $user = User::where('email', $data['email'])->first();
+        // El campo que recibimos ahora se llama "login"
+        $login = $data['login']; 
+        $password = $data['password'];
 
-        if (! $user || ! Hash::check($data['password'], $user->password)) {
+        // Buscar por email O employee_number
+        $user = User::where('email', $login)
+            ->orWhere('employee_number', $login)
+            ->first();
+
+        if (! $user || ! Hash::check($password, $user->password)) {
             return response()->json(['message' => 'Credenciales inválidas'], 422);
         }
 
@@ -68,13 +75,15 @@ class AuthController extends Controller
         return response()->json([
             'token' => $token,
             'user'  => [
-                'id'    => $user->id,
-                'name'  => $user->name,
-                'email' => $user->email,
-                'role'  => $user->role,
+                'id'             => $user->id,
+                'name'           => $user->name,
+                'email'          => $user->email,
+                'role'           => $user->role,
+                'employee_number'=> $user->employee_number,
             ],
         ], 200);
     }
+
 
     /** POST /api/v1/auth/logout */
     public function logout(Request $request)
