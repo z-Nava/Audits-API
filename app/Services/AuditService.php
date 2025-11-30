@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Models\Audit;
 use App\Models\Assignment;
 use App\Models\AuditItem;
-use App\Models\Employee;
 use App\Models\Tool;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -55,11 +54,14 @@ class AuditService
             if (!in_array($assignment->status, ['assigned','in_progress'], true)) {
                 throw ValidationException::withMessages(['assignment_id' => 'La asignación no permite iniciar auditoría.']);
             }
-            $employeeOk = Employee::where('employee_number', $data['employee_number'])
-                                  ->where('active', true)
-                                  ->exists();
+            $employeeOk = \App\Models\User::where('employee_number', $data['employee_number'])
+                              ->where('active', true)
+                              ->exists();
+
             if (!$employeeOk) {
-                throw ValidationException::withMessages(['employee_number' => 'Número de empleado inválido o inactivo.']);
+                throw ValidationException::withMessages([
+                    'employee_number' => 'Número de empleado inválido o inactivo.'
+                ]);
             }
 
             // Crear auditoría

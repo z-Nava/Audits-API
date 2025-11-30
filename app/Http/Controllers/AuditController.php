@@ -28,7 +28,7 @@ class AuditController extends Controller
     public function show(Audit $audit)
     {
         return response()->json(
-            $audit->load(['assignment','technician','supervisor','line','items.tool']),
+            $audit->load(['assignment.tools','assignment','technician','supervisor','line','items.tool']),
             200
         );
     }
