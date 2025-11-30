@@ -58,7 +58,7 @@ class AuditWebController extends Controller
     public function reopen(Audit $audit)
     {
         try {
-            $this->$audit->reopen($audit);
+            $this->review->reopen($audit);
             return redirect()
                 ->route('supervisor.audits.show', $audit->id)
                 ->with('success', 'La auditoría ha sido reabierta correctamente.');
