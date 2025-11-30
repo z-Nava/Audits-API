@@ -27,4 +27,9 @@ class Tool extends Model
     {
         return $this->hasMany(AuditItem::class, 'tool_id');
     }
+
+    public function scopeActive($query)
+    {
+        return $query->where('active', true);
+    }
 }

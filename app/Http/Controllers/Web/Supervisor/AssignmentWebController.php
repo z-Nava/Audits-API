@@ -8,6 +8,7 @@ use App\Services\AssignmentService;
 use App\Models\Assignment;
 use App\Models\User;
 use App\Models\ProductionLine;
+use App\Models\Tool;
 
 class AssignmentWebController extends Controller
 {
@@ -28,8 +29,9 @@ class AssignmentWebController extends Controller
     {
         $technicians = User::technicians()->active()->get();
         $lines = ProductionLine::active()->get();
+        $tools = collect();
 
-        return view('supervisor.assignments.create', compact('technicians', 'lines'));
+        return view('supervisor.assignments.create', compact('technicians', 'lines', 'tools'));
     }
 
     public function store(Request $request)
@@ -37,7 +39,7 @@ class AssignmentWebController extends Controller
         $data = $request->validate([
             'technician_id' => 'required|exists:users,id',
             'line_id'       => 'required|exists:production_lines,id',
-            'shift'         => 'required|in:morning,evening,night',
+            'shift' => 'required|in:A,B,C',
             'assigned_at'   => 'required|date',
             'due_at'        => 'nullable|date|after_or_equal:assigned_at',
             'notes'         => 'nullable|string|max:500',
@@ -47,7 +49,9 @@ class AssignmentWebController extends Controller
 
         $data['supervisor_id'] = auth()->id();
 
-        $this->assignment->create($data);
+        $assignment = $this->assignment->create($data);
+
+        $assignment->tools()->sync($request->input('tools', []));
 
         return redirect()->route('supervisor.assignments.index')->with('success', 'Asignación creada correctamente.');
     }
@@ -57,21 +61,33 @@ class AssignmentWebController extends Controller
         $technicians = User::technicians()->active()->get();
         $lines = ProductionLine::active()->get();
 
-        return view('supervisor.assignments.edit', compact('assignment', 'technicians', 'lines'));
+        $tools = Tool::where('line_id', $assignment->line_id)
+                    ->where('active', true)
+                    ->get();
+
+        $toolsSelected = $assignment->tools()
+            ->pluck('tools.id')
+            ->toArray();
+
+        return view('supervisor.assignments.edit', compact(
+            'assignment', 'technicians', 'lines', 'tools', 'toolsSelected'
+        ));
     }
+
 
     public function update(Request $request, Assignment $assignment)
     {
         $data = $request->validate([
             'technician_id' => 'required|exists:users,id',
             'line_id'       => 'required|exists:production_lines,id',
-            'shift'         => 'required|in:morning,evening,night',
+            'shift' => 'required|in:A,B,C',
             'assigned_at'   => 'required|date',
             'due_at'        => 'nullable|date|after_or_equal:assigned_at',
             'notes'         => 'nullable|string|max:500',
         ]);
 
         $this->assignment->update($assignment, $data);
+        $assignment->tools()->sync($request->input('tools', []));
 
         return redirect()->route('supervisor.assignments.index')->with('success', 'Asignación actualizada.');
     }
