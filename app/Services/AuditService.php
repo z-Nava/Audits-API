@@ -11,6 +11,7 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 
 class AuditService
 {
@@ -113,6 +114,8 @@ class AuditService
             throw ValidationException::withMessages(['tool_id' => 'La herramienta no pertenece a la asignación.']);
         }
 
+        Log::info('🆕 AddItem DATA received:', $data);
+
         return AuditItem::create([
             'audit_id' => $audit->id,
             'tool_id'  => $tool->id,
@@ -129,6 +132,8 @@ class AuditService
             throw ValidationException::withMessages(['status' => 'No se puede editar ítems cuando la auditoría no está en progreso.']);
         }
         $item->update($data);
+        Log::info('🔁 UpdateItem DATA received:', $data);
+
         return $item;
     }
 
