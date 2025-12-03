@@ -26,14 +26,35 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($audit->items as $item)
-                <tr class="border-t">
-                    <td class="px-4 py-2">{{ $item->tool->name ?? '—' }}</td>
-                    <td class="px-4 py-2">{{ $item->result }}</td>
-                    <td class="px-4 py-2">{{ $item->comments }}</td>
-                </tr>
-            @endforeach
-        </tbody>
+    @foreach($audit->items as $item)
+        <tr class="border-t align-top">
+            <td class="px-4 py-2">{{ $item->tool->name ?? '—' }}</td>
+            <td class="px-4 py-2">{{ $item->result }}</td>
+            <td class="px-4 py-2 space-y-2">
+                <p>{{ $item->comments ?? '—' }}</p>
+
+                {{-- 📸 Mostrar fotos si existen --}}
+                @if($item->photos && $item->photos->count() > 0)
+                    <div class="flex flex-wrap gap-3 mt-2">
+                        @foreach($item->photos as $photo)
+                            <a href="{{ asset('storage/'.$photo->path) }}" 
+                               target="_blank" 
+                               class="block border rounded overflow-hidden shadow-md hover:ring-2 hover:ring-blue-500 transition">
+                                <img src="{{ asset('storage/'.$photo->path) }}"
+                                     alt="Foto auditoría"
+                                     class="h-24 w-24 object-cover">
+                            </a>
+                        @endforeach
+                    </div>
+                @else
+                    <span class="text-gray-500 italic">Sin evidencias</span>
+                @endif
+
+            </td>
+        </tr>
+    @endforeach
+</tbody>
+
     </table>
 
     <h2 class="text-xl font-semibold mb-2">Revisiones</h2>
