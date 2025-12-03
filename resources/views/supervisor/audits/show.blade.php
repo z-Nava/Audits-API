@@ -17,45 +17,70 @@
     </div>
 
     <h2 class="text-xl font-semibold mt-6 mb-2">Ítems auditados</h2>
-    <table class="w-full bg-white shadow rounded mb-6">
-        <thead>
-            <tr class="bg-gray-200 text-left">
-                <th class="px-4 py-2">Herramienta</th>
-                <th class="px-4 py-2">Resultado</th>
-                <th class="px-4 py-2">Comentarios</th>
-            </tr>
-        </thead>
-        <tbody>
-    @foreach($audit->items as $item)
-        <tr class="border-t align-top">
-            <td class="px-4 py-2">{{ $item->tool->name ?? '—' }}</td>
-            <td class="px-4 py-2">{{ $item->result }}</td>
-            <td class="px-4 py-2 space-y-2">
-                <p>{{ $item->comments ?? '—' }}</p>
 
-                {{-- 📸 Mostrar fotos si existen --}}
-                @if($item->photos && $item->photos->count() > 0)
-                    <div class="flex flex-wrap gap-3 mt-2">
-                        @foreach($item->photos as $photo)
-                            <a href="{{ asset('storage/'.$photo->path) }}" 
-                               target="_blank" 
-                               class="block border rounded overflow-hidden shadow-md hover:ring-2 hover:ring-blue-500 transition">
-                                <img src="{{ asset('storage/'.$photo->path) }}"
-                                     alt="Foto auditoría"
-                                     class="h-24 w-24 object-cover">
-                            </a>
-                        @endforeach
-                    </div>
-                @else
-                    <span class="text-gray-500 italic">Sin evidencias</span>
-                @endif
-
-            </td>
+<table class="w-full bg-white shadow rounded mb-6">
+    <thead>
+        <tr class="bg-gray-200 text-left">
+            <th class="px-4 py-2">Herramienta</th>
+            <th class="px-4 py-2">Resultado</th>
+            <th class="px-4 py-2">Comentarios & Evidencias</th>
         </tr>
-    @endforeach
-</tbody>
+    </thead>
+    <tbody>
+        @foreach($audit->items as $item)
+            <tr class="border-t align-top">
+                <td class="px-4 py-3 font-semibold">
+                    {{ $item->tool->name ?? '—' }}
+                </td>
 
-    </table>
+                <td class="px-4 py-3">
+                    @php
+                        $resultClass = match($item->result) {
+                            'PASS' => 'bg-green-600 text-white',
+                            'FAIL' => 'bg-red-600 text-white',
+                            'NA'   => 'bg-gray-500 text-white',
+                            default => 'bg-gray-300 text-black'
+                        };
+                        $resultIcon = match($item->result) {
+                            'PASS' => '✔️',
+                            'FAIL' => '❌',
+                            'NA'   => '➖',
+                            default => '❔'
+                        };
+                    @endphp
+
+                    <span class="px-3 py-1 rounded-full text-sm font-bold {{ $resultClass }}">
+                        {{ $resultIcon }} {{ $item->result }}
+                    </span>
+                </td>
+
+                <td class="px-4 py-3 space-y-2">
+
+                    <p>{{ $item->comments ?? '—' }}</p>
+
+                    {{-- Mostrar evidencia si existe --}}
+                    @if($item->photos && $item->photos->count() > 0)
+                        <div class="flex flex-wrap gap-3 mt-2">
+                            @foreach($item->photos as $photo)
+                                <a href="{{ asset('storage/'.$photo->path) }}"
+                                   target="_blank"
+                                   class="border rounded overflow-hidden shadow-md hover:ring-2 hover:ring-blue-500 transition">
+                                    <img src="{{ asset('storage/'.$photo->path) }}"
+                                         class="h-24 w-24 object-cover"
+                                         alt="Foto Auditoría">
+                                </a>
+                            @endforeach
+                        </div>
+                    @else
+                        <span class="text-gray-400 italic">Sin evidencias</span>
+                    @endif
+
+                </td>
+            </tr>
+        @endforeach
+    </tbody>
+</table>
+
 
     <h2 class="text-xl font-semibold mb-2">Revisiones</h2>
     @forelse($audit->reviews as $review)
