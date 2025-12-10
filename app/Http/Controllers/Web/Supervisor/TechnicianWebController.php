@@ -46,11 +46,17 @@ class TechnicianWebController extends Controller
             'password' => [
                 'required',
                 'string',
-                'min:6'
+                'min:8',
+                'regex:/[A-Z]/',   
+                'regex:/[a-z]/',    
+                'regex:/[0-9]/',    
+                'regex:/[\W]/',     
             ],
         ], [
             'name.min' => 'El nombre debe tener al menos 3 caracteres.',
             'employee_number.regex' => 'El número de empleado solo puede contener letras, números y guiones.',
+            'password.min' => 'La contraseña debe tener mínimo 8 caracteres.',
+            'password.regex' => 'La contraseña debe incluir mayúsculas, minúsculas, números y al menos un símbolo especial.',
         ]);
 
         $data['role'] = 'technician';
@@ -63,7 +69,6 @@ class TechnicianWebController extends Controller
             ->route('supervisor.technicians.index')
             ->with('success', 'Técnico registrado correctamente.');
     }
-
 
     public function edit(User $technician)
     {
