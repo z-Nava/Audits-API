@@ -86,7 +86,8 @@ class LineWebController extends Controller
             'name'  => [
                 'required',
                 'string',
-                'max:100'
+                'max:100',
+                Rule::unique('production_lines', 'name')->ignore($line->id)
             ],
             'area'  => [
                 'nullable',
